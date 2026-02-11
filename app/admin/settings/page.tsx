@@ -7,44 +7,70 @@ import { useRouter } from 'next/navigation'
 import { ArrowLeft, Save } from 'lucide-react'
 import Link from 'next/link'
 
+import axios from 'axios'
+import { toast } from 'sonner'
+
 export default function AdminSettings() {
   const router = useRouter()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [saved, setSaved] = useState(false)
-  const [companyInfo, setCompanyInfo] = useState({
-    companyName: 'Spyro Inc',
-    phone: '289-231-0597',
-    email: 'spyro.reno@gmail.com',
-    address: 'Serving Greater Toronto Area',
-    aboutText: '25+ years of expert construction and renovation services',
-    tagline: 'Excellence in Every Project',
+  const [settings, setSettings] = useState({
+    siteName: '',
+    contactEmail: '',
+    phoneNumber: '',
+    address: '',
+    footerText: '',
+    socialLinks: {
+      facebook: '',
+      twitter: '',
+      instagram: '',
+      linkedin: ''
+    }
   })
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
-      router.push('/admin/login')
-    } else {
-      setIsAuthenticated(true)
+    fetchSettings()
+  }, [])
+
+  const fetchSettings = async () => {
+    try {
+      const response = await axios.get('/api/admin/settings')
+      const data = response.data
+      if (data.success && data.data) {
+        setSettings({
+          ...settings,
+          ...data.data,
+          socialLinks: { ...settings.socialLinks, ...data.data.socialLinks }
+        })
+      }
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        router.push('/admin/login')
+      } else {
+        console.error("Error fetching settings:", error)
+      }
+    } finally {
+      setLoading(false)
     }
-  }, [router])
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setCompanyInfo({
-      ...companyInfo,
-      [e.target.name]: e.target.value,
-    })
   }
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the data to a server
-    setSaved(true)
-    setTimeout(() => setSaved(false), 3000)
+    try {
+      const response = await axios.put('/api/admin/settings', settings)
+      if (response.status === 200) {
+        setSaved(true)
+        toast.success("Settings saved successfully")
+        setTimeout(() => setSaved(false), 3000)
+      }
+    } catch (error: any) {
+      console.error("Error saving settings:", error)
+      toast.error(error.response?.data?.message || "Failed to save settings")
+    }
   }
 
-  if (!isAuthenticated) {
-    return null
+  if (loading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center text-white">Loading Settings...</div>
   }
 
   return (
@@ -69,101 +95,89 @@ export default function AdminSettings() {
         )}
 
         <div className="bg-card border border-primary border-opacity-20 rounded-xl p-8 animate-fade-in-up">
-          <h2 className="text-3xl font-bold text-white mb-8">Company Information</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">Site Configuration</h2>
 
           <form onSubmit={handleSave} className="space-y-6">
             <div>
-              <label htmlFor="companyName" className="block text-white font-semibold mb-2">
-                Company Name
-              </label>
+              <label className="block text-white font-semibold mb-2">Site Name</label>
               <input
                 type="text"
-                id="companyName"
-                name="companyName"
-                value={companyInfo.companyName}
-                onChange={handleChange}
+                value={settings.siteName}
+                onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
                 className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                required
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="phone" className="block text-white font-semibold mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={companyInfo.phone}
-                  onChange={handleChange}
-                  className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-white font-semibold mb-2">
-                  Email Address
-                </label>
+                <label className="block text-white font-semibold mb-2">Contact Email</label>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
-                  value={companyInfo.email}
-                  onChange={handleChange}
+                  value={settings.contactEmail}
+                  onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
+                  className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-white font-semibold mb-2">Phone Number</label>
+                <input
+                  type="tel"
+                  value={settings.phoneNumber}
+                  onChange={(e) => setSettings({ ...settings, phoneNumber: e.target.value })}
                   className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="address" className="block text-white font-semibold mb-2">
-                Service Area / Address
-              </label>
+              <label className="block text-white font-semibold mb-2">Address / Service Area</label>
               <input
                 type="text"
-                id="address"
-                name="address"
-                value={companyInfo.address}
-                onChange={handleChange}
+                value={settings.address}
+                onChange={(e) => setSettings({ ...settings, address: e.target.value })}
                 className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
               />
             </div>
 
             <div>
-              <label htmlFor="tagline" className="block text-white font-semibold mb-2">
-                Company Tagline
-              </label>
-              <input
-                type="text"
-                id="tagline"
-                name="tagline"
-                value={companyInfo.tagline}
-                onChange={handleChange}
-                className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="aboutText" className="block text-white font-semibold mb-2">
-                About Text
-              </label>
+              <label className="block text-white font-semibold mb-2">Footer Text / About Summary</label>
               <textarea
-                id="aboutText"
-                name="aboutText"
-                value={companyInfo.aboutText}
-                onChange={handleChange}
-                rows={5}
+                value={settings.footerText}
+                onChange={(e) => setSettings({ ...settings, footerText: e.target.value })}
+                rows={4}
                 className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all resize-none"
               />
             </div>
 
+            <div className="mt-8">
+              <h3 className="text-xl font-bold text-primary mb-4">Social Media Links</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {Object.keys(settings.socialLinks).map((platform) => (
+                  <div key={platform}>
+                    <label className="block text-white text-sm font-semibold mb-1 capitalize">{platform}</label>
+                    <input
+                      type="text"
+                      value={(settings.socialLinks as any)[platform]}
+                      onChange={(e) => setSettings({
+                        ...settings,
+                        socialLinks: { ...settings.socialLinks, [platform]: e.target.value }
+                      })}
+                      className="w-full bg-secondary text-white rounded-lg px-4 py-2 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                      placeholder={`https://${platform}.com/...`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <button
               type="submit"
-              className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 animate-pulse-glow"
+              className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all flex items-center justify-center gap-2"
             >
               <Save size={20} />
-              Save Settings
+              Save Configuration
             </button>
           </form>
         </div>

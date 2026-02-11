@@ -1,23 +1,22 @@
 'use client'
 
-import React from "react"
-
+import { useState } from 'react'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
-import { useState } from 'react'
 import { toast } from 'sonner'
+import axios from 'axios'
 
-
-interface formData {
+interface ContactFormData {
   name: string,
   email: string,
   phone: string,
   service: string,
   message: string
 }
+
 export default function Contact() {
-  const [formData, setFormData] = useState<formData>({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     phone: '',
@@ -42,38 +41,28 @@ export default function Contact() {
     setIsSubmitting(true)
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      const response = await axios.post('/api/contact', formData)
 
-      const data = await res.json()
+      if (response.data.success) {
+        toast.success('Message sent! We will get back to you shortly.')
+        setSubmitted(true)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: '',
+        })
 
-      if (!res.ok) {
-        throw new Error(data.message || 'Something went wrong')
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitted(false)
+        }, 5000)
       }
-
-      toast.success('Message sent! We will get back to you shortly.')
-      setSubmitted(true)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: '',
-      })
-
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitted(false)
-      }, 5000)
-
     } catch (error: any) {
       console.error('Submission error:', error)
-      toast.error(error.message || "Failed to send message. Please try again.")
+      const message = error.response?.data?.message || "Failed to send message. Please try again."
+      toast.error(message)
     } finally {
       setIsSubmitting(false)
     }

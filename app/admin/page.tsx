@@ -6,68 +6,79 @@ import { LogOut, Users, FileText, MessageSquare, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
 
 interface ContactMessage {
-  id: number
+  _id: number
   name: string
   email: string
   service: string
-  date: string
+  createdAt: string
   status: 'new' | 'read' | 'replied'
 }
 
+import axios from 'axios'
+import { toast } from 'sonner'
+
 export default function AdminDashboard() {
   const router = useRouter()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [messages, setMessages] = useState<ContactMessage[]>([
-    {
-      id: 1,
-      name: 'John Smith',
-      email: 'john@example.com',
-      service: 'Basement Renovation',
-      date: '2024-02-10',
-      status: 'new',
-    },
-    {
-      id: 2,
-      name: 'Sarah Johnson',
-      email: 'sarah@example.com',
-      service: 'Flooring Installation',
-      date: '2024-02-09',
-      status: 'read',
-    },
-    {
-      id: 3,
-      name: 'Michael Brown',
-      email: 'michael@example.com',
-      service: 'General Renovation',
-      date: '2024-02-08',
-      status: 'replied',
-    },
+  const [loading, setLoading] = useState(true)
+  const [messages, setMessages] = useState<ContactMessage[]>([])
+  const [stats, setStats] = useState([
+    { icon: FileText, label: 'Total Projects', value: '...', color: 'text-blue-500', href: '/admin/projects' },
+    { icon: Users, label: 'Satisfied Clients', value: '200+', color: 'text-green-500', href: '#' },
+    { icon: MessageSquare, label: 'New Messages', value: '...', color: 'text-primary', href: '/admin/messages' },
+    { icon: BarChart3, label: 'Revenue', value: '$450K+', color: 'text-yellow-500', href: '#' },
   ])
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken')
-    if (!token) {
-      router.push('/admin/login')
-    } else {
-      setIsAuthenticated(true)
+    async function fetchData() {
+      try {
+        const [contactsRes, projectsRes, servicesRes] = await Promise.all([
+          axios.get('/api/admin/contacts'),
+          axios.get('/api/admin/projects'),
+          axios.get('/api/admin/services')
+        ]);
+
+        const contactsData = contactsRes.data;
+        const projectsData = projectsRes.data;
+        const servicesData = servicesRes.data;
+
+        if (contactsData.success) {
+          setMessages(contactsData.data.slice(0, 5)); // Show only latest 5
+
+          setStats(prev => [
+            { ...prev[0], value: projectsData.data?.length.toString() || '0' },
+            prev[1],
+            { ...prev[2], value: contactsData.data?.length.toString() || '0' },
+            prev[3]
+          ]);
+        }
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          router.push('/admin/login');
+        } else {
+          console.error("Error fetching dashboard data:", error);
+        }
+      } finally {
+        setLoading(false);
+      }
     }
+
+    fetchData();
   }, [router])
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken')
-    router.push('/admin/login')
+  const handleLogout = async () => {
+    try {
+      await axios.post('/api/logout')
+      toast.success("Logged out successfully")
+      router.push('/admin/login')
+    } catch (error) {
+      console.error("Logout failed:", error)
+      toast.error("Logout failed")
+    }
   }
 
-  if (!isAuthenticated) {
-    return null
+  if (loading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center text-white">Loading Dashboard...</div>
   }
-
-  const stats = [
-    { icon: FileText, label: 'Total Projects', value: '150+', color: 'text-blue-500' },
-    { icon: Users, label: 'Satisfied Clients', value: '200+', color: 'text-green-500' },
-    { icon: MessageSquare, label: 'New Messages', value: '5', color: 'text-primary' },
-    { icon: BarChart3, label: 'Revenue', value: '$450K+', color: 'text-yellow-500' },
-  ]
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -168,17 +179,16 @@ export default function AdminDashboard() {
               </thead>
               <tbody>
                 {messages.map((message) => (
-                  <tr
-                    key={message.id}
+                  <tr key={message._id}
                     className="border-b border-primary border-opacity-10 hover:bg-secondary transition-colors"
                   >
                     <td className="py-4 px-4 text-white font-semibold">{message.name}</td>
                     <td className="py-4 px-4 text-gray-300">{message.email}</td>
                     <td className="py-4 px-4 text-gray-300">{message.service}</td>
-                    <td className="py-4 px-4 text-gray-400">{message.date}</td>
+                    <td className="py-4 px-4 text-gray-400">{message.createdAt}</td>
                     <td className="py-4 px-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${getStatusColor(
+                        className={`px-3 py-1 text-white rounded-full text-xs font-semibold capitalize ${getStatusColor(
                           message.status
                         )}`}
                       >

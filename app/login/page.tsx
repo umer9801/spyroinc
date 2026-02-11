@@ -1,27 +1,50 @@
 'use client'
 
-import React from "react"
-
+import axios from "axios"
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Lock, Mail } from 'lucide-react'
+import { Lock, Mail, Loader2 } from 'lucide-react'
+import { toast } from "sonner"
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setLoading(true)
 
-    // Demo credentials
-    if (email === 'admin@spyroinc.com' && password === 'admin123') {
-      localStorage.setItem('adminToken', 'authenticated')
-      router.push('/admin')
-    } else {
-      setError('Invalid email or password')
+    try {
+      const response = await axios.post('/api/login', { email, password });
+
+      if (response.data.success) {
+        toast.success("Login successful! Redirecting to dashboard...")
+        // Using window.location.href instead of router.push ensures the 
+        // middleware picks up the new cookie immediately via a full page reload.
+        window.location.href = '/admin';
+      } else {
+        const errorMsg = response.data.message || 'Login failed';
+        setError(errorMsg);
+        toast.error(errorMsg);
+      }
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const message = err.response?.data?.message || err.message || 'An error occurred during login';
+        setError(message);
+        toast.error(message);
+        console.error("Login Error:", message);
+      } else {
+        const errorMsg = 'An unexpected error occurred';
+        setError(errorMsg);
+        toast.error(errorMsg);
+        console.error("Unexpected Error:", err);
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -79,9 +102,17 @@ export default function AdminLogin() {
 
             <button
               type="submit"
-              className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all"
+              disabled={loading}
+              className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Login
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 animate-spin" size={20} />
+                  Logging in...
+                </>
+              ) : (
+                'Login'
+              )}
             </button>
           </form>
 
