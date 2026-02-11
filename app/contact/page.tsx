@@ -6,9 +6,18 @@ import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
+
+interface formData {
+  name: string,
+  email: string,
+  phone: string,
+  service: string,
+  message: string
+}
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formData>({
     name: '',
     email: '',
     phone: '',
@@ -16,6 +25,7 @@ export default function Contact() {
     message: '',
   })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (
@@ -27,13 +37,27 @@ export default function Contact() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the form data to a server
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
+    setIsSubmitting(true)
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.message || 'Something went wrong')
+      }
+
+      toast.success('Message sent! We will get back to you shortly.')
+      setSubmitted(true)
       setFormData({
         name: '',
         email: '',
@@ -41,7 +65,18 @@ export default function Contact() {
         service: '',
         message: '',
       })
-    }, 3000)
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitted(false)
+      }, 5000)
+
+    } catch (error: any) {
+      console.error('Submission error:', error)
+      toast.error(error.message || "Failed to send message. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -189,10 +224,10 @@ export default function Contact() {
                         className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
                       >
                         <option value="">Select a service</option>
-                        <option value="basement">Basement Renovation</option>
-                        <option value="flooring">Flooring Installation</option>
-                        <option value="renovation">General Renovation</option>
-                        <option value="other">Other</option>
+                        <option value="Basement Renovation">Basement Renovation</option>
+                        <option value="Flooring Installation">Flooring Installation</option>
+                        <option value="General Renovation">General Renovation</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
 
@@ -214,9 +249,10 @@ export default function Contact() {
 
                     <button
                       type="submit"
-                      className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 animate-pulse-glow"
+                      disabled={isSubmitting}
+                      className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 animate-pulse-glow disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Send Message <Send size={20} />
+                      {isSubmitting ? 'Sending...' : 'Send Message'} {!isSubmitting && <Send size={20} />}
                     </button>
                   </form>
                 )}
