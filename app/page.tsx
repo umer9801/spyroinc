@@ -170,7 +170,7 @@ export default function Home() {
                 <Link
                   key={service.title}
                   href={service.href}
-                  className="group overflow-hidden rounded-2xl bg-white shadow-xl hover:shadow-2xl transition-all animate-fade-in-up hover-lift"
+                  className="group overflow-hidden rounded-2xl bg-white shadow-xl hover:shadow-2xl transition-all duration-500 animate-scale-in hover-lift hover-glow"
                   style={{ animationDelay: `${index * 0.15}s` }}
                 >
                   <div className="relative h-64 overflow-hidden">
@@ -179,20 +179,23 @@ export default function Home() {
                       alt={service.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700"
                     />
-                    <div className="absolute top-4 left-4 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg animate-pulse-glow">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute top-4 left-4 bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg animate-bounce-subtle group-hover:scale-110 transition-transform duration-300">
                       {service.icon}
                     </div>
                   </div>
 
-                  <div className="p-6 bg-white">
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">
+                  <div className="p-6 bg-white relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition-colors duration-300 relative z-10">
                       {service.title}
                     </h3>
-                    <p className="text-gray-600 mb-4 leading-relaxed">{service.description}</p>
-                    <div className="inline-flex items-center gap-2 text-primary font-semibold border border-primary px-4 py-2 rounded-lg group-hover:bg-primary group-hover:text-white transition-all">
+                    <p className="text-gray-600 mb-4 leading-relaxed relative z-10">{service.description}</p>
+                    <div className="inline-flex items-center gap-2 text-primary font-semibold border-2 border-primary px-5 py-2.5 rounded-lg group-hover:bg-primary group-hover:text-white transition-all duration-300 group-hover:gap-3 relative z-10">
                       Learn More
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                     </div>
                   </div>
                 </Link>

@@ -93,14 +93,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Testimonial Section */}
-        <div className="my-8 p-6 bg-gray-900 rounded-lg border border-primary border-opacity-20">
-          <p className="text-gray-300 italic mb-3">
-            "Spyro Inc transformed our basement into an amazing space. Professional, reliable, and exceptional quality work. Highly recommended!"
-          </p>
-          <p className="text-primary font-semibold">- Sarah Johnson, Toronto</p>
-        </div>
-
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 pt-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

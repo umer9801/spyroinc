@@ -135,36 +135,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* Team Section */}
-        <section className="py-20 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl font-bold text-center mb-16 text-white">
-              Meet Our <span className="text-primary">Leadership Team</span>
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                { name: 'John Spyro', role: 'Founder & CEO', bio: '25+ years in construction industry' },
-                { name: 'Maria Rodriguez', role: 'Operations Manager', bio: 'Oversees project execution & quality' },
-                { name: 'David Thompson', role: 'Senior Project Manager', bio: 'Manages major renovations & budgets' },
-              ].map((member, index) => (
-                <div
-                  key={member.name}
-                  className="bg-card border border-primary border-opacity-20 rounded-xl overflow-hidden hover:border-primary transition-all animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="h-64 bg-gradient-to-b from-primary to-red-700"></div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                    <p className="text-primary font-semibold mb-3">{member.role}</p>
-                    <p className="text-gray-300">{member.bio}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Certifications Section */}
         <section className="py-20 bg-secondary">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

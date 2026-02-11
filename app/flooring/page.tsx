@@ -57,15 +57,15 @@ export default function Flooring() {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="animate-fade-in-up">
-                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-scale-in">
                   Premium <span className="text-primary">Flooring</span> Solutions
                 </h1>
-                <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+                <p className="text-xl text-gray-300 mb-6 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                   From hardwood to luxury vinyl, we install beautiful flooring that
                   transforms your space. Our expert installation ensures long-lasting
                   results and stunning aesthetics.
                 </p>
-                <p className="text-gray-400 text-lg mb-8">
+                <p className="text-gray-400 text-lg mb-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                   We offer a wide selection of flooring materials with professional
                   installation services. Whether you want classic hardwood, modern vinyl,
                   or elegant tile, we have the expertise to bring your vision to life.
@@ -73,19 +73,20 @@ export default function Flooring() {
 
                 <a
                   href="/contact"
-                  className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all inline-flex items-center gap-2 animate-pulse-glow"
+                  className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all inline-flex items-center gap-2 animate-pulse-glow hover-lift animate-fade-in-up"
+                  style={{ animationDelay: '0.4s' }}
                 >
                   Get Free Estimate <ArrowRight size={20} />
                 </a>
               </div>
 
-              <div className="animate-slide-in-right">
+              <div className="animate-slide-in-left">
                 <Image
                   src="/images/flooring-service.jpg"
                   alt="Beautiful flooring installation"
                   width={500}
                   height={500}
-                  className="rounded-xl shadow-2xl border-4 border-primary"
+                  className="rounded-xl shadow-2xl border-4 border-primary hover-scale"
                 />
               </div>
             </div>
@@ -103,15 +104,15 @@ export default function Flooring() {
               {flooringTypes.map((type, index) => (
                 <div
                   key={type.title}
-                  className="bg-card border border-primary border-opacity-20 rounded-xl p-8 hover:border-primary transition-all animate-fade-in-up hover:shadow-2xl"
+                  className="bg-card border border-primary border-opacity-20 rounded-xl p-8 hover:border-primary transition-all animate-scale-in hover-lift hover-glow"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <h3 className="text-2xl font-bold text-primary mb-3">{type.title}</h3>
+                  <h3 className="text-2xl font-bold text-primary mb-3 animate-fade-in-up" style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>{type.title}</h3>
                   <p className="text-gray-300 mb-6">{type.description}</p>
 
                   <div className="grid grid-cols-2 gap-3">
-                    {type.features.map((feature) => (
-                      <div key={feature} className="flex items-center gap-2">
+                    {type.features.map((feature, fIndex) => (
+                      <div key={feature} className="flex items-center gap-2 animate-fade-in-up" style={{ animationDelay: `${index * 0.1 + fIndex * 0.05 + 0.3}s` }}>
                         <Check className="text-primary flex-shrink-0" size={20} />
                         <span className="text-gray-200">{feature}</span>
                       </div>
@@ -134,10 +135,10 @@ export default function Flooring() {
               {services.map((service, index) => (
                 <div
                   key={service}
-                  className="flex items-start gap-3 p-6 bg-card rounded-lg border border-primary border-opacity-20 hover:border-primary transition-all animate-fade-in-up"
+                  className="flex items-start gap-3 p-6 bg-card rounded-lg border border-primary border-opacity-20 hover:border-primary transition-all animate-fade-in-up hover-lift hover-glow"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  <Check className="text-primary flex-shrink-0 mt-1" size={24} />
+                  <Check className="text-primary flex-shrink-0 mt-1 animate-scale-in" size={24} style={{ animationDelay: `${index * 0.05 + 0.2}s` }} />
                   <h3 className="text-lg font-semibold text-white">{service}</h3>
                 </div>
               ))}
@@ -177,10 +178,10 @@ export default function Flooring() {
               ].map((item, index) => (
                 <div
                   key={item.title}
-                  className="flex gap-4 p-8 bg-card rounded-xl border border-primary border-opacity-20 hover:border-primary transition-all animate-fade-in-up"
+                  className="flex gap-4 p-8 bg-card rounded-xl border border-primary border-opacity-20 hover:border-primary transition-all animate-fade-in-up hover-lift hover-glow"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="w-12 h-12 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-bold flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-bold flex-shrink-0 animate-bounce-subtle">
                     {index + 1}
                   </div>
                   <div>
@@ -282,7 +283,7 @@ export default function Flooring() {
               ].map((feature, index) => (
                 <div
                   key={feature.title}
-                  className="bg-card border border-primary border-opacity-20 rounded-xl p-6 hover:border-primary transition-all animate-fade-in-up"
+                  className="bg-card border border-primary border-opacity-20 rounded-xl p-6 hover:border-primary transition-all animate-fade-in-up hover-lift hover-glow"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   <h3 className="text-lg font-bold text-primary mb-2">{feature.title}</h3>
@@ -296,15 +297,16 @@ export default function Flooring() {
         {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-secondary to-background border-t-4 border-primary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-4xl font-bold mb-6 text-white">
+            <h2 className="text-4xl font-bold mb-6 text-white animate-fade-in-up">
               Transform Your Space With <span className="text-primary">Beautiful Flooring</span>
             </h2>
-            <p className="text-gray-300 text-lg mb-8">
+            <p className="text-gray-300 text-lg mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Contact us today for a free consultation and explore our flooring options.
             </p>
             <a
               href="/contact"
-              className="bg-primary text-primary-foreground px-10 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all inline-flex items-center gap-2 animate-pulse-glow"
+              className="bg-primary text-primary-foreground px-10 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all inline-flex items-center gap-2 animate-pulse-glow hover-lift animate-fade-in-up"
+              style={{ animationDelay: '0.4s' }}
             >
               Get Your Free Estimate <ArrowRight size={20} />
             </a>
