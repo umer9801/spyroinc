@@ -46,7 +46,7 @@ export default function Flooring() {
         <section className="relative pt-40 md:pt-32 pb-20 bg-gradient-to-b from-secondary to-background">
           <div className="absolute inset-0 overflow-hidden opacity-20">
             <Image
-              src="/images/flooring-service.jpg"
+              src="/images/flooringins.png"
               alt="Flooring installation"
               fill
               sizes="100vw"
@@ -82,7 +82,7 @@ export default function Flooring() {
 
               <div className="animate-slide-in-left">
                 <Image
-                  src="/images/flooring-service.jpg"
+                  src="/images/flooringinstall.png"
                   alt="Beautiful flooring installation"
                   width={500}
                   height={500}

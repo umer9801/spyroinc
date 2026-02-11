@@ -72,7 +72,7 @@ export default function About() {
 
               <div className="animate-slide-in-right">
                 <Image
-                  src="/images/renovation-showcase.jpg"
+                  src="/images/home.png"
                   alt="Spyro Inc Team"
                   width={500}
                   height={500}

@@ -19,7 +19,7 @@ export default function Basements() {
     {
       title: 'Modern Recreation Room',
       description: 'Fully finished basement with entertainment center',
-      image: '/images/basement-renovation.jpg',
+      image: '/images/basementreno.png',
     },
     {
       title: 'Home Office Basement',
@@ -29,7 +29,7 @@ export default function Basements() {
     {
       title: 'Luxury Wet Bar',
       description: 'Premium bar setup with storage and seating',
-      image: '/images/basement-renovation.jpg',
+      image: '/images/luxurybasement.png',
     },
   ]
 
@@ -41,7 +41,7 @@ export default function Basements() {
         <section className="relative pt-40 md:pt-32 pb-20 bg-gradient-to-b from-secondary to-background">
           <div className="absolute inset-0 overflow-hidden opacity-20">
             <Image
-              src="/images/basement-renovation.jpg"
+              src="/images/basemnt.png"
               alt="Basement renovation"
               fill
               sizes="100vw"
@@ -77,7 +77,7 @@ export default function Basements() {
 
               <div className="animate-slide-in-left">
                 <Image
-                  src="/images/basement-renovation.jpg"
+                  src="/images/basemnt.png"
                   alt="Finished basement"
                   width={500}
                   height={500}

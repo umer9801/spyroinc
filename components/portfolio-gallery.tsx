@@ -7,22 +7,22 @@ export function PortfolioGallery() {
     {
       title: 'Modern Kitchen Renovation',
       category: 'Kitchen',
-      image: '/images/renovation-showcase.jpg',
+      image: '/images/kitchen.png',
     },
     {
       title: 'Luxury Basement Finish',
       category: 'Basement',
-      image: '/images/basement-renovation.jpg',
+      image: '/images/luxurybasement.png',
     },
     {
       title: 'Premium Flooring Installation',
       category: 'Flooring',
-      image: '/images/flooring-service.jpg',
+      image: '/images/flooringinstall.png',
     },
     {
       title: 'Complete Home Transformation',
       category: 'Full Renovation',
-      image: '/images/hero-construction.jpg',
+      image: '/images/before.png',
     },
   ]
 

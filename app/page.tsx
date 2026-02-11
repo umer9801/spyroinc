@@ -12,19 +12,19 @@ export default function Home() {
     {
       title: 'Basement Renovations',
       description: 'Complete basement finishing, waterproofing, and custom layouts',
-      image: '/images/basement-renovation.jpg',
+      image: '/images/basement.png',
       href: '/basements',
     },
     {
       title: 'Flooring Installation',
       description: 'Premium hardwood, vinyl, and tile flooring solutions',
-      image: '/images/flooring-service.jpg',
+      image: '/images/flooring.png',
       href: '/flooring',
     },
     {
       title: 'Home Renovations',
       description: 'Kitchen, bathroom, and whole-home renovation experts',
-      image: '/images/renovation-showcase.jpg',
+      image: '/images/kitchen.png',
       href: '/about',
     },
   ]
@@ -46,7 +46,7 @@ export default function Home() {
         <section className="relative h-screen pt-32 md:pt-16 bg-gradient-to-b from-background to-secondary">
           <div className="absolute inset-0 overflow-hidden">
             <Image
-              src="/images/hero-construction.jpg"
+              src="/images/home.png"
               alt="Professional construction team"
               fill
               sizes="100vw"
@@ -91,7 +91,7 @@ export default function Home() {
               {/* Right Image */}
               <div className="hidden lg:block animate-slide-in-left">
                 <Image
-                  src="/images/hero-construction.jpg"
+                  src="/images/homecons.png"
                   alt="Construction team at work"
                   width={500}
                   height={500}
@@ -141,28 +141,28 @@ export default function Home() {
                 {
                   title: 'Basement & Secondary Units',
                   description: 'Transform your basement into a functional living space or legal rental unit. We handle permits, inspections, and finishing - delivering safe, stylish, and fully compliant secondary suites.',
-                  image: '/images/basement-renovation.jpg',
+                  image: '/images/basemnt.png',
                   href: '/basements',
                   icon: '🏠',
                 },
                 {
                   title: 'Flooring Installation',
                   description: 'Professional installation of vinyl, laminate, hardwood, and tile flooring. Our precision workmanship ensures smooth transitions and long-lasting finishes.',
-                  image: '/images/flooring-service.jpg',
+                  image: '/images/flooring.png',
                   href: '/flooring',
                   icon: '📐',
                 },
                 {
                   title: 'Drywall & Painting',
                   description: 'Full-service wall finishing and painting with clean lines and superior results. Enhance your interiors with a professional touch.',
-                  image: '/images/renovation-showcase.jpg',
+                  image: '/images/paint.png',
                   href: '/about',
                   icon: '🎨',
                 },
                 {
                   title: 'Handyman Repairs',
                   description: 'From small fixes to general maintenance, no task is too minor for our skilled team. Reliable, affordable, and done right the first time.',
-                  image: '/images/hero-construction.jpg',
+                  image: '/images/handyman.png',
                   href: '/contact',
                   icon: '🔧',
                 },
