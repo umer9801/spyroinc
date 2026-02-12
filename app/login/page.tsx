@@ -63,10 +63,10 @@ export default function AdminLogin() {
       </div>
 
       <div className="w-full max-w-md">
-        <div className="bg-card border border-primary border-opacity-20 rounded-xl p-8 animate-fade-in-up">
+        <div className="bg-[#141414] border border-white/5 rounded-2xl p-8 shadow-2xl animate-fade-in-up">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-primary mb-2">SPYRO INC</h1>
-            <p className="text-gray-300">Admin Dashboard Login</p>
+            <h1 className="text-4xl font-bold text-white mb-2 uppercase tracking-tighter">SPYRO <span className="text-primary">INC</span></h1>
+            <p className="text-gray-400">Admin Dashboard Login</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
@@ -81,13 +81,13 @@ export default function AdminLogin() {
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 text-primary" size={20} />
+                <Mail className="absolute left-3 top-3 text-secondary-foreground/40" size={20} />
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-secondary text-white rounded-lg pl-10 pr-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                  className="w-full bg-secondary/50 text-white rounded-lg pl-10 pr-4 py-3 border border-white/10 focus:border-primary focus:outline-none transition-all"
                   required
                 />
               </div>
@@ -98,13 +98,13 @@ export default function AdminLogin() {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 text-primary" size={20} />
+                <Lock className="absolute left-3 top-3 text-secondary-foreground/40" size={20} />
                 <input
                   type="password"
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-secondary text-white rounded-lg pl-10 pr-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                  className="w-full bg-secondary/50 text-white rounded-lg pl-10 pr-4 py-3 border border-white/10 focus:border-primary focus:outline-none transition-all"
                   required
                 />
               </div>
@@ -126,10 +126,6 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 p-4 bg-secondary rounded-lg text-sm text-gray-400 text-center">
-            <p className="font-semibold text-white mb-2">Notice:</p>
-            <p>Authorized access only.</p>
-          </div>
         </div>
       </div>
     </div>
