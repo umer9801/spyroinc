@@ -3,8 +3,16 @@
 import Link from 'next/link'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 
+import { useSettings } from '@/hooks/useSettings'
+
 export function Footer() {
   const currentYear = new Date().getFullYear()
+  const { settings } = useSettings()
+
+  const phone = settings?.phoneNumber || '289-231-0597'
+  const email = settings?.contactEmail || 'spyro.reno@gmail.com'
+  const area = settings?.serviceArea || 'Serving Greater Toronto Area'
+  const hours = settings?.businessHours || 'Mon-Sat 8AM-6PM, Sun By Appointment'
 
   return (
     <footer className="bg-black text-white border-t-4 border-primary">
@@ -12,9 +20,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="animate-fade-in-up">
-            <h3 className="text-2xl font-bold text-primary mb-4">SPYRO INC</h3>
+            <h3 className="text-2xl font-bold text-primary mb-4">{settings?.siteName || 'SPYRO INC'}</h3>
             <p className="text-gray-300 mb-4">
-              25+ years of expert construction and renovation services
+              {settings?.footerText || '25+ years of expert construction and renovation services'}
             </p>
             <p className="text-sm text-gray-400">
               Your trusted partner for quality construction and renovations
@@ -48,22 +56,22 @@ export function Footer() {
             <h4 className="text-lg font-bold text-primary mb-4">Contact</h4>
             <div className="space-y-3">
               <a
-                href="tel:2892310597"
+                href={`tel:${phone.replace(/-/g, '')}`}
                 className="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors"
               >
                 <Phone size={18} />
-                <span>289-231-0597</span>
+                <span>{phone}</span>
               </a>
               <a
-                href="mailto:spyro.reno@gmail.com"
+                href={`mailto:${email}`}
                 className="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors"
               >
                 <Mail size={18} />
-                <span>spyro.reno@gmail.com</span>
+                <span>{email}</span>
               </a>
               <div className="flex items-start gap-2 text-gray-300">
                 <MapPin size={18} className="mt-1 flex-shrink-0" />
-                <span>Serving Greater Toronto Area</span>
+                <span>{area}</span>
               </div>
             </div>
           </div>
@@ -74,10 +82,9 @@ export function Footer() {
             <div className="space-y-2 text-gray-300 text-sm">
               <div className="flex items-center gap-2">
                 <Clock size={16} className="text-primary" />
-                <span>Monday - Saturday</span>
+                <span>Current Hours</span>
               </div>
-              <p className="ml-6">8:00 AM - 6:00 PM</p>
-              <p className="mt-3">Sunday: By Appointment</p>
+              <p className="ml-6">{hours}</p>
             </div>
           </div>
 

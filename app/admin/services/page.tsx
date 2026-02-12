@@ -249,15 +249,48 @@ export default function AdminServices() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1">Image URL (Icon Field)</label>
-                <input
-                  type="text"
-                  value={formData.icon}
-                  onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                  className="w-full bg-secondary border border-primary/10 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-gray-600 font-semibold"
-                  placeholder="https://images.unsplash.com/..."
-                />
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 ml-1">Service Image</label>
+                <div className="flex flex-col gap-4">
+                  {formData.icon && (
+                    <div className="relative w-full h-40 rounded-2xl overflow-hidden border border-primary/20">
+                      <img src={formData.icon} alt="Preview" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, icon: '' })}
+                        className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all shadow-lg"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  )}
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          const reader = new FileReader()
+                          reader.onloadend = () => {
+                            setFormData({ ...formData, icon: reader.result as string })
+                          }
+                          reader.readAsDataURL(file)
+                        }
+                      }}
+                      className="hidden"
+                      id="service-image"
+                    />
+                    <label
+                      htmlFor="service-image"
+                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-primary/20 rounded-2xl cursor-pointer hover:bg-primary/5 hover:border-primary/40 transition-all gap-2"
+                    >
+                      <ImageIcon className="text-primary/40" size={32} />
+                      <span className="text-sm font-semibold text-gray-400">Click to upload or drag and drop</span>
+                      <span className="text-[10px] text-gray-500 font-medium">PNG, JPG or WEBP (MAX. 5MB)</span>
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-2">

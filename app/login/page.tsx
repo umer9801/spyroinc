@@ -3,8 +3,9 @@
 import axios from "axios"
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Lock, Mail, Loader2 } from 'lucide-react'
+import { Lock, Mail, Loader2, ArrowLeft } from 'lucide-react'
 import { toast } from "sonner"
+import Link from 'next/link'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState<string>('')
@@ -25,7 +26,8 @@ export default function AdminLogin() {
         toast.success("Login successful! Redirecting to dashboard...")
         // Using window.location.href instead of router.push ensures the 
         // middleware picks up the new cookie immediately via a full page reload.
-        window.location.href = '/admin';
+        // window.location.href = '/admin';
+        router.push('/admin')
       } else {
         const errorMsg = response.data.message || 'Login failed';
         setError(errorMsg);
@@ -49,7 +51,17 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 relative">
+      <div className="absolute top-8 left-8">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-gray-400 hover:text-primary transition-colors font-semibold"
+        >
+          <ArrowLeft size={20} />
+          Back to Home
+        </Link>
+      </div>
+
       <div className="w-full max-w-md">
         <div className="bg-card border border-primary border-opacity-20 rounded-xl p-8 animate-fade-in-up">
           <div className="text-center mb-8">
@@ -76,7 +88,6 @@ export default function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-secondary text-white rounded-lg pl-10 pr-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
-                  placeholder="admin@spyroinc.com"
                   required
                 />
               </div>
@@ -94,7 +105,6 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-secondary text-white rounded-lg pl-10 pr-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
-                  placeholder="••••••••"
                   required
                 />
               </div>
@@ -116,10 +126,9 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 p-4 bg-secondary rounded-lg text-sm text-gray-400">
-            <p className="font-semibold text-white mb-2">Demo Credentials:</p>
-            <p>Email: admin@spyroinc.com</p>
-            <p>Password: admin123</p>
+          <div className="mt-6 p-4 bg-secondary rounded-lg text-sm text-gray-400 text-center">
+            <p className="font-semibold text-white mb-2">Notice:</p>
+            <p>Authorized access only.</p>
           </div>
         </div>
       </div>

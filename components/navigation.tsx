@@ -4,8 +4,11 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, Phone } from 'lucide-react'
 
+import { useSettings } from '@/hooks/useSettings'
+
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const { settings } = useSettings()
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -15,17 +18,20 @@ export function Navigation() {
     { label: 'Contact', href: '/contact' },
   ]
 
+  const phone = settings?.phoneNumber || '289-231-0597'
+  const hours = settings?.businessHours || 'Mon-Sat: 8AM-6PM | Sun: By Appointment'
+
   return (
     <>
       {/* Top Info Bar */}
       <div className="hidden md:block bg-secondary text-secondary-foreground py-3 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex gap-6">
-            <a href="tel:289-231-0597" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <a href={`tel:${phone.replace(/-/g, '')}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
               <Phone size={16} />
-              289-231-0597
+              {phone}
             </a>
-            <span>Mon-Sat: 8AM-6PM | Sun: By Appointment</span>
+            <span>{hours}</span>
           </div>
           <Link href="/admin/login" className="hover:opacity-80 transition-opacity">
             Admin Login

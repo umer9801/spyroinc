@@ -12,6 +12,9 @@ export interface ISettings extends Document {
         linkedin?: string;
     };
     footerText?: string;
+    serviceArea?: string;
+    businessHours?: string;
+
 }
 
 const settingsSchema: Schema<ISettings> = new Schema(
@@ -25,15 +28,17 @@ const settingsSchema: Schema<ISettings> = new Schema(
             type: String,
             required: [true, "Contact email is required"],
         },
-        phoneNumber: String,
-        address: String,
+        phoneNumber: {type:String},
+        address: {type: String },
+        serviceArea: {type: String},
+        businessHours: {type:String , default: "Mon-Fri 9AM-5PM"},
         socialLinks: {
             facebook: String,
             twitter: String,
             instagram: String,
             linkedin: String,
         },
-        footerText: String,
+        footerText: {type: String}
     },
     { timestamps: true }
 );

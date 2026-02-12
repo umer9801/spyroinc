@@ -22,22 +22,22 @@ export async function GET() {
     }
 }
 
+
 // PUT update settings
 export async function PUT(req: Request) {
     try {
         await connectToDatabase();
         const body = await req.json();
 
-        let settings = await Settings.findOne();
-
-        if (settings) {
-            settings = await Settings.findByIdAndUpdate(settings._id, body, { new: true, runValidators: true });
-        } else {
-            settings = await Settings.create(body);
-        }
+        const settings = await Settings.findOneAndUpdate(
+            {}, // Match any (usually only one exists)
+            { $set: body },
+            { new: true, upsert: true, runValidators: true }
+        );
 
         return NextResponse.json({ success: true, data: settings });
     } catch (error: any) {
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     }
 }
+

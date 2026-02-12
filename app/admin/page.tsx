@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { LogOut, Users, FileText, MessageSquare, BarChart3 } from 'lucide-react'
+import { LogOut, Users, FileText, MessageSquare, BarChart3, Phone } from 'lucide-react'
 import Link from 'next/link'
 
 interface ContactMessage {
@@ -152,9 +152,19 @@ export default function AdminDashboard() {
           </Link>
 
           <Link
-            href="/admin/settings"
+            href="/admin/contact"
             className="bg-card border border-primary border-opacity-20 rounded-xl p-6 hover:border-primary transition-all animate-fade-in-up group"
             style={{ animationDelay: '0.2s' }}
+          >
+            <Phone className="text-primary mb-3 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="text-lg font-bold text-white mb-2">Contact Info</h3>
+            <p className="text-gray-400">View timing, location & areas</p>
+          </Link>
+
+          <Link
+            href="/admin/settings"
+            className="bg-card border border-primary border-opacity-20 rounded-xl p-6 hover:border-primary transition-all animate-fade-in-up group"
+            style={{ animationDelay: '0.3s' }}
           >
             <Users className="text-primary mb-3 group-hover:scale-110 transition-transform" size={32} />
             <h3 className="text-lg font-bold text-white mb-2">Settings</h3>

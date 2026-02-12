@@ -10,15 +10,35 @@ import Link from 'next/link'
 import axios from 'axios'
 import { toast } from 'sonner'
 
+
+interface SocialLinks {
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  linkedin: string;
+}
+
+interface SiteSettings {
+  siteName: string;
+  contactEmail: string;
+  phoneNumber: string;
+  address: string;
+  serviceArea: string;
+  businessHours: string;
+  footerText: string;
+  socialLinks: SocialLinks;
+}
 export default function AdminSettings() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [saved, setSaved] = useState(false)
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<SiteSettings>({
     siteName: '',
     contactEmail: '',
     phoneNumber: '',
     address: '',
+    serviceArea: '',
+    businessHours: '',
     footerText: '',
     socialLinks: {
       facebook: '',
@@ -56,9 +76,13 @@ export default function AdminSettings() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    console.log("handlesave ");
+    console.log("setting" , settings);
     try {
-      const response = await axios.put('/api/admin/settings', settings)
+      const response = await axios.put('/api/admin/settings' , settings)
       if (response.status === 200) {
+        console.log("response data" , response.data)
         setSaved(true)
         toast.success("Settings saved successfully")
         setTimeout(() => setSaved(false), 3000)
@@ -98,18 +122,17 @@ export default function AdminSettings() {
           <h2 className="text-3xl font-bold text-white mb-8">Site Configuration</h2>
 
           <form onSubmit={handleSave} className="space-y-6">
-            <div>
-              <label className="block text-white font-semibold mb-2">Site Name</label>
-              <input
-                type="text"
-                value={settings.siteName}
-                onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
-                className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
-                required
-              />
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-white font-semibold mb-2">Site Name</label>
+                <input
+                  type="text"
+                  value={settings.siteName}
+                  onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+                  className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                  required
+                />
+              </div>
               <div>
                 <label className="block text-white font-semibold mb-2">Contact Email</label>
                 <input
@@ -120,6 +143,9 @@ export default function AdminSettings() {
                   required
                 />
               </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-white font-semibold mb-2">Phone Number</label>
                 <input
@@ -129,15 +155,36 @@ export default function AdminSettings() {
                   className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
                 />
               </div>
+              <div>
+                <label className="block text-white font-semibold mb-2">Service Area</label>
+                <input
+                  type="text"
+                  value={settings.serviceArea}
+                  onChange={(e) => setSettings({ ...settings, serviceArea: e.target.value })}
+                  className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                  placeholder="e.g. Greater Toronto Area"
+                />
+              </div>
             </div>
 
             <div>
-              <label className="block text-white font-semibold mb-2">Address / Service Area</label>
+              <label className="block text-white font-semibold mb-2">Business Address</label>
               <input
                 type="text"
                 value={settings.address}
                 onChange={(e) => setSettings({ ...settings, address: e.target.value })}
                 className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+              />
+            </div>
+
+            <div>
+              <label className="block text-white font-semibold mb-2">Business Hours</label>
+              <input
+                type="text"
+                value={settings.businessHours}
+                onChange={(e) => setSettings({ ...settings, businessHours: e.target.value })}
+                className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
+                placeholder="e.g. Mon-Sat 8AM-6PM, Sun By Appointment"
               />
             </div>
 
@@ -185,11 +232,10 @@ export default function AdminSettings() {
         {/* Additional Sections */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <div className="bg-card border border-primary border-opacity-20 rounded-xl p-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <h3 className="text-xl font-bold text-primary mb-4">Business Hours</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li>Monday - Saturday: 8:00 AM - 6:00 PM</li>
-              <li>Sunday: By Appointment</li>
-            </ul>
+            <h3 className="text-xl font-bold text-primary mb-4">Current Business Hours</h3>
+            <p className="text-gray-300">
+              {settings.businessHours || "Not set"}
+            </p>
           </div>
 
           <div className="bg-card border border-primary border-opacity-20 rounded-xl p-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>

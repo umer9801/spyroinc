@@ -1,30 +1,56 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import axios from 'axios'
+
+interface IProject {
+  _id: string;
+  title: string;
+  category: string;
+  image?: string;
+  order?: number;
+}
 
 export function PortfolioGallery() {
-  const portfolioItems = [
-    {
-      title: 'Modern Kitchen Renovation',
-      category: 'Kitchen',
-      image: '/images/kitchen.png',
-    },
-    {
-      title: 'Luxury Basement Finish',
-      category: 'Basement',
-      image: '/images/luxurybasement.png',
-    },
-    {
-      title: 'Premium Flooring Installation',
-      category: 'Flooring',
-      image: '/images/flooringinstall.png',
-    },
-    {
-      title: 'Complete Home Transformation',
-      category: 'Full Renovation',
-      image: '/images/before.png',
-    },
-  ]
+  const [projects, setProjects] = useState<IProject[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get('/api/projects')
+        if (response.data.success) {
+          setProjects(response.data.data)
+        }
+      } catch (error) {
+        console.error("Error fetching projects:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProjects()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto"></div>
+        <p className="text-gray-400 mt-4">Loading portfolio...</p>
+      </div>
+    )
+  }
+
+  if (projects.length === 0) {
+    return (
+      <section className="py-20 bg-background text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-white mb-4">No portfolio data available right now.</h2>
+          <p className="text-gray-400">Our recent projects will be showcased here soon.</p>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="py-20 bg-background">
@@ -37,9 +63,9 @@ export function PortfolioGallery() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {portfolioItems.map((item, index) => (
+          {projects.map((item, index) => (
             <div
-              key={item.title}
+              key={item._id}
               className="group relative overflow-hidden rounded-xl border border-primary border-opacity-20 hover:border-primary transition-all hover:shadow-2xl animate-fade-in-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >

@@ -72,7 +72,7 @@ export default function About() {
 
               <div className="animate-slide-in-right">
                 <Image
-                  src="/images/home.png"
+                  src="/spyro inc images/spyronic workplace.jpeg"
                   alt="Spyro Inc Team"
                   width={500}
                   height={500}
@@ -164,6 +164,38 @@ export default function About() {
                   <p className="text-white font-semibold text-lg">{cert}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Our Fleet Section */}
+        <section className="py-20 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="animate-slide-in-left order-2 lg:order-1">
+                <Image
+                  src="/spyro inc images/vehicle.jpeg"
+                  alt="Spyro Inc Service Vehicle"
+                  width={600}
+                  height={400}
+                  className="rounded-xl shadow-2xl border-4 border-primary"
+                />
+              </div>
+              <div className="animate-fade-in-up order-1 lg:order-2">
+                <h2 className="text-4xl font-bold text-white mb-6">
+                  Our <span className="text-primary">Professional Fleet</span>
+                </h2>
+                <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+                  We come fully equipped to every job site. Our professional fleet and
+                  modern tools ensure that we can handle projects of any scale with
+                  efficiency and precision.
+                </p>
+                <p className="text-gray-400 text-lg mb-8">
+                  When you see a Spyro Inc vehicle, you know that quality craftsmanship
+                  and reliable service are on the way. We take pride in our professional
+                  presentation and readiness.
+                </p>
+              </div>
             </div>
           </div>
         </section>

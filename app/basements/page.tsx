@@ -19,17 +19,17 @@ export default function Basements() {
     {
       title: 'Modern Recreation Room',
       description: 'Fully finished basement with entertainment center',
-      image: '/images/basementreno.png',
+      image: '/spyro inc images/house styling.jpeg',
     },
     {
       title: 'Home Office Basement',
       description: 'Professional workspace with custom cabinetry',
-      image: '/images/basement-renovation.jpg',
+      image: '/spyro inc images/renuvaraiton.jpeg',
     },
     {
       title: 'Luxury Wet Bar',
       description: 'Premium bar setup with storage and seating',
-      image: '/images/luxurybasement.png',
+      image: '/spyro inc images/wetbar.jpg',
     },
   ]
 
@@ -41,7 +41,7 @@ export default function Basements() {
         <section className="relative pt-40 md:pt-32 pb-20 bg-gradient-to-b from-secondary to-background">
           <div className="absolute inset-0 overflow-hidden opacity-20">
             <Image
-              src="/images/basemnt.png"
+              src="/spyro inc images/renuvation House.jpeg"
               alt="Basement renovation"
               fill
               sizes="100vw"
@@ -77,7 +77,7 @@ export default function Basements() {
 
               <div className="animate-slide-in-left">
                 <Image
-                  src="/images/basemnt.png"
+                  src="/spyro inc images/renuvaraiton.jpeg"
                   alt="Finished basement"
                   width={500}
                   height={500}

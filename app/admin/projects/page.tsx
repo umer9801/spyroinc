@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Plus, Edit2, Trash2, FileText, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Plus, Edit2, Trash2, FileText, ExternalLink, X, ImageIcon } from 'lucide-react'
 import Link from 'next/link'
 
 interface Project {
@@ -213,14 +213,46 @@ export default function AdminProjects() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-1.5 ml-1">Image URL</label>
-                  <input
-                    type="text"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="w-full bg-secondary border border-primary border-opacity-10 rounded-xl px-4 py-3 focus:border-primary outline-none transition-all"
-                    placeholder="https://..."
-                  />
+                  <label className="block text-sm font-semibold text-gray-400 mb-1.5 ml-1">Project Image</label>
+                  <div className="space-y-4">
+                    {formData.image && (
+                      <div className="relative w-full h-40 rounded-xl overflow-hidden border border-primary/20">
+                        <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => setFormData({ ...formData, image: '' })}
+                          className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all shadow-lg"
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    )}
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]
+                          if (file) {
+                            const reader = new FileReader()
+                            reader.onloadend = () => {
+                              setFormData({ ...formData, image: reader.result as string })
+                            }
+                            reader.readAsDataURL(file)
+                          }
+                        }}
+                        className="hidden"
+                        id="project-image"
+                      />
+                      <label
+                        htmlFor="project-image"
+                        className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-primary/20 rounded-xl cursor-pointer hover:bg-primary/5 hover:border-primary/40 transition-all gap-2"
+                      >
+                        <ImageIcon className="text-primary/40" size={24} />
+                        <span className="text-xs font-semibold text-gray-400 text-center px-4">Click to upload project photo</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
 

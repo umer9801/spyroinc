@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
-import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, Send, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import axios from 'axios'
+
+import { useSettings } from '@/hooks/useSettings'
 
 interface ContactFormData {
   name: string,
@@ -24,6 +26,7 @@ export default function Contact() {
     message: '',
   })
 
+  const { settings, loading: loadingSettings } = useSettings()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
@@ -72,27 +75,42 @@ export default function Contact() {
     {
       icon: Phone,
       title: 'Phone',
-      content: '289-231-0597',
-      link: 'tel:2892310597',
+      content: settings?.phoneNumber || '289-231-0597',
+      link: `tel:${(settings?.phoneNumber || '2892310597').replace(/-/g, '')}`,
     },
     {
       icon: Mail,
       title: 'Email',
-      content: 'spyro.reno@gmail.com',
-      link: 'mailto:spyro.reno@gmail.com',
+      content: settings?.contactEmail || 'spyro.reno@gmail.com',
+      link: `mailto:${settings?.contactEmail || 'spyro.reno@gmail.com'}`,
     },
     {
       icon: MapPin,
       title: 'Service Area',
-      content: 'Greater Toronto Area',
+      content: settings?.serviceArea || 'Greater Toronto Area',
       link: '#',
     },
     {
       icon: Clock,
       title: 'Hours',
-      content: 'Mon-Sat 8AM-6PM, Sun By Appointment',
+      content: settings?.businessHours || 'Mon-Sat 8AM-6PM, Sun By Appointment',
       link: '#',
     },
+  ]
+
+  const serviceOptions = [
+    "Hardwood Flooring",
+    "Luxury Vinyl Flooring",
+    "Tile Flooring",
+    "Laminate Flooring",
+    "Complete Waterproofing Solutions",
+    "Custom Framing & Insulation",
+    "Electrical & HVAC Integration",
+    "Drywall & Finishing",
+    "Flooring Installation",
+    "Recreation Room Design",
+    "Home Office Setups",
+    "Egress Windows for Safety"
   ]
 
   return (
@@ -117,7 +135,7 @@ export default function Contact() {
         {/* Contact Info Cards */}
         <section className="py-20 bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20 text-balance">
               {contactInfo.map((info, index) => {
                 const Icon = info.icon
                 return (
@@ -213,10 +231,9 @@ export default function Contact() {
                         className="w-full bg-secondary text-white rounded-lg px-4 py-3 border border-primary border-opacity-20 focus:border-primary focus:outline-none transition-all"
                       >
                         <option value="">Select a service</option>
-                        <option value="Basement Renovation">Basement Renovation</option>
-                        <option value="Flooring Installation">Flooring Installation</option>
-                        <option value="General Renovation">General Renovation</option>
-                        <option value="Other">Other</option>
+                        {serviceOptions.map((option) => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
                       </select>
                     </div>
 
@@ -265,7 +282,7 @@ export default function Contact() {
                       href="tel:2892310597"
                       className="text-primary font-bold text-lg hover:opacity-80 transition-opacity"
                     >
-                      289-231-0597
+                      {settings?.phoneNumber}
                     </a>
                   </div>
 
@@ -280,7 +297,7 @@ export default function Contact() {
                       href="mailto:spyro.reno@gmail.com"
                       className="text-primary font-bold text-lg hover:opacity-80 transition-opacity"
                     >
-                      spyro.reno@gmail.com
+                      {settings?.contactEmail}
                     </a>
                   </div>
 
@@ -289,11 +306,9 @@ export default function Contact() {
                       Business Hours
                     </h3>
                     <p className="text-gray-300">
-                      Monday - Saturday: 8:00 AM - 6:00 PM
+                    {settings?.businessHours}
                     </p>
-                    <p className="text-gray-300">
-                      Sunday: By Appointment
-                    </p>
+                    
                   </div>
 
                   <div className="bg-card border border-primary border-opacity-20 rounded-xl p-6">

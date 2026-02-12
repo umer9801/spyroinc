@@ -46,7 +46,7 @@ export default function Flooring() {
         <section className="relative pt-40 md:pt-32 pb-20 bg-gradient-to-b from-secondary to-background">
           <div className="absolute inset-0 overflow-hidden opacity-20">
             <Image
-              src="/images/flooringins.png"
+              src="/spyro inc images/bathroomflooring.jpeg"
               alt="Flooring installation"
               fill
               sizes="100vw"
@@ -82,7 +82,7 @@ export default function Flooring() {
 
               <div className="animate-slide-in-left">
                 <Image
-                  src="/images/flooringinstall.png"
+                  src="/spyro inc images/bathroomflooring.jpeg"
                   alt="Beautiful flooring installation"
                   width={500}
                   height={500}
@@ -245,9 +245,8 @@ export default function Flooring() {
                   ].map((row, index) => (
                     <tr
                       key={row.material}
-                      className={`border-b border-gray-700 ${
-                        index % 2 === 0 ? 'bg-secondary' : 'bg-card'
-                      } hover:bg-gray-800 transition-colors`}
+                      className={`border-b border-gray-700 ${index % 2 === 0 ? 'bg-secondary' : 'bg-card'
+                        } hover:bg-gray-800 transition-colors`}
                     >
                       <td className="px-6 py-4 font-semibold">{row.material}</td>
                       <td className="px-6 py-4">{row.durability}</td>

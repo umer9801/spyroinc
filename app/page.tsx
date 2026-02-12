@@ -4,31 +4,11 @@ import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { PremiumFeatures } from '@/components/premium-features'
 import { PortfolioGallery } from '@/components/portfolio-gallery'
+import { ServicesSection } from '@/components/services-section'
 import { FAQSection } from '@/components/faq-section'
 import { ArrowRight, CheckCircle2, MapPin } from 'lucide-react'
 
 export default function Home() {
-  const services = [
-    {
-      title: 'Basement Renovations',
-      description: 'Complete basement finishing, waterproofing, and custom layouts',
-      image: '/images/basement.png',
-      href: '/basements',
-    },
-    {
-      title: 'Flooring Installation',
-      description: 'Premium hardwood, vinyl, and tile flooring solutions',
-      image: '/images/flooring.png',
-      href: '/flooring',
-    },
-    {
-      title: 'Home Renovations',
-      description: 'Kitchen, bathroom, and whole-home renovation experts',
-      image: '/images/kitchen.png',
-      href: '/about',
-    },
-  ]
-
   const features = [
     'Licensed & Insured Professionals',
     '25+ Years of Experience',
@@ -46,7 +26,7 @@ export default function Home() {
         <section className="relative h-screen pt-32 md:pt-16 bg-gradient-to-b from-background to-secondary">
           <div className="absolute inset-0 overflow-hidden">
             <Image
-              src="/images/home.png"
+              src="/spyro inc images/logobanner.jpeg"
               alt="Professional construction team"
               fill
               sizes="100vw"
@@ -91,7 +71,7 @@ export default function Home() {
               {/* Right Image */}
               <div className="hidden lg:block animate-slide-in-left">
                 <Image
-                  src="/images/homecons.png"
+                  src="/spyro inc images/house styling.jpeg"
                   alt="Construction team at work"
                   width={500}
                   height={500}
@@ -136,71 +116,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  title: 'Basement & Secondary Units',
-                  description: 'Transform your basement into a functional living space or legal rental unit. We handle permits, inspections, and finishing - delivering safe, stylish, and fully compliant secondary suites.',
-                  image: '/images/basemnt.png',
-                  href: '/basements',
-                  icon: '🏠',
-                },
-                {
-                  title: 'Flooring Installation',
-                  description: 'Professional installation of vinyl, laminate, hardwood, and tile flooring. Our precision workmanship ensures smooth transitions and long-lasting finishes.',
-                  image: '/images/flooring.png',
-                  href: '/flooring',
-                  icon: '📐',
-                },
-                {
-                  title: 'Drywall & Painting',
-                  description: 'Full-service wall finishing and painting with clean lines and superior results. Enhance your interiors with a professional touch.',
-                  image: '/images/paint.png',
-                  href: '/about',
-                  icon: '🎨',
-                },
-                {
-                  title: 'Handyman Repairs',
-                  description: 'From small fixes to general maintenance, no task is too minor for our skilled team. Reliable, affordable, and done right the first time.',
-                  image: '/images/handyman.png',
-                  href: '/contact',
-                  icon: '🔧',
-                },
-              ].map((service, index) => (
-                <Link
-                  key={service.title}
-                  href={service.href}
-                  className="group overflow-hidden rounded-2xl bg-white shadow-xl hover:shadow-2xl transition-all duration-500 animate-scale-in hover-lift hover-glow"
-                  style={{ animationDelay: `${index * 0.15}s` }}
-                >
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={service.image || "/placeholder.svg"}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-125 group-hover:rotate-2 transition-all duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute top-4 left-4 bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg animate-bounce-subtle group-hover:scale-110 transition-transform duration-300">
-                      {service.icon}
-                    </div>
-                  </div>
-
-                  <div className="p-6 bg-white relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-primary transition-colors duration-300 relative z-10">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 leading-relaxed relative z-10">{service.description}</p>
-                    <div className="inline-flex items-center gap-2 text-primary font-semibold border-2 border-primary px-5 py-2.5 rounded-lg group-hover:bg-primary group-hover:text-white transition-all duration-300 group-hover:gap-3 relative z-10">
-                      Learn More
-                      <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <ServicesSection />
           </div>
         </section>
 
