@@ -23,7 +23,7 @@ export function Navigation() {
 
   return (
     <>
-      {/* Top Info Bar */}
+      {/* Top Info Bar
       <div className="hidden md:block bg-secondary text-secondary-foreground py-3 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex gap-6">
@@ -37,10 +37,12 @@ export function Navigation() {
             Admin Login
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Navigation */}
-      <nav className="fixed top-12 md:top-0 w-full bg-primary z-50 shadow-lg">
+<nav className="fixed top-0 w-full bg-primary z-50 shadow-lg">
+
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
