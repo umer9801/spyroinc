@@ -98,7 +98,8 @@ export default function AdminDashboard() {
       {/* Header */}
       <header className="bg-primary text-primary-foreground shadow-lg sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold">SPYRO INC - Admin</h1>
+          <img className="h-14 w-30 " src="/spyro logo/spyro.png" alt="SPYRO INC" />
+          <h1 className= "text-2xl font-bold  text-primary-foreground">Admin Management Panel</h1>
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all font-semibold"

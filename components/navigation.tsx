@@ -45,8 +45,8 @@ export function Navigation() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <div className="text-2xl font-bold text-primary-foreground">
-                SPYRO INC
+              <div className="flex items-center">
+                <img className="h-14 w-25 " src="/spyro logo/spyro.png" alt="SPYRO INC" />
               </div>
             </Link>
 

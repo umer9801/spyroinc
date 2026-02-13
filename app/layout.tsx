@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: 'Spyro Inc - Professional Construction & Renovation Services',
   description: 'Spyro Inc Construction - 25+ years of expert construction and renovation services in the Greater Toronto Area. Specializing in basements, flooring, and complete home renovations.',
   keywords: 'construction, renovation, basements, flooring, Toronto, contractor',
+  icons: {
+    icon: '/favicon/spyro.png',
+    shortcut: '/favicon/spyro.png',
+    apple: '/favicon/spyro.png',
+  },
   openGraph: {
     title: 'Spyro Inc - Professional Construction & Renovation',
     description: '25+ years of expert construction and renovation services',
