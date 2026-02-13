@@ -6,6 +6,9 @@ export interface IProject extends Document {
     image?: string;
     link?: string;
     category?: string;
+    clientName?: string;
+    date?: Date;
+    status?: 'pending' | 'under process' | 'completed';
     order: number;
 }
 
@@ -32,6 +35,18 @@ const projectSchema: Schema<IProject> = new Schema(
         category: {
             type: String,
             trim: true,
+        },
+        clientName: {
+            type: String,
+            trim: true,
+        },
+        date: {
+            type: Date,
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'under process', 'completed'],
+            default: 'pending',
         },
         order: {
             type: Number,

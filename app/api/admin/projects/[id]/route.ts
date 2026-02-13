@@ -9,7 +9,20 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         const { id } = await params;
         const body = await req.json();
 
-        const project = await Project.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+        // Prepare update data with all fields including clientName and date
+        const updateData = {
+            title: body.title,
+            description: body.description,
+            category: body.category,
+            clientName: body.clientName,
+            date: body.date,
+            status: body.status,
+            image: body.image,
+            link: body.link,
+            order: body.order
+        };
+
+        const project = await Project.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
 
         if (!project) {
             return NextResponse.json({ success: false, message: "Project not found" }, { status: 404 });

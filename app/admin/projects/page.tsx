@@ -12,6 +12,9 @@ interface Project {
   image?: string
   link?: string
   category?: string
+  clientName?: string
+  date?: string
+  status?: 'pending' | 'under process' | 'completed'
   order: number
   createdAt?: string
 }
@@ -34,6 +37,9 @@ export default function AdminProjects() {
     title: '',
     description: '',
     category: '',
+    clientName: '',
+    date: '',
+    status: 'pending' as 'pending' | 'under process' | 'completed',
     image: '',
     link: '',
     order: 0
@@ -92,6 +98,9 @@ export default function AdminProjects() {
       title: project.title,
       description: project.description,
       category: project.category || '',
+      clientName: project.clientName || '',
+      date: project.date ? new Date(project.date).toISOString().split('T')[0] : '',
+      status: project.status || 'pending',
       image: project.image || '',
       link: project.link || '',
       order: project.order
@@ -107,7 +116,7 @@ export default function AdminProjects() {
       const response = await axios.put(`/api/admin/projects/${editingId}`, formData)
       if (response.data.success) {
         toast.success("Project updated successfully")
-        setFormData({ title: '', description: '', category: '', image: '', link: '', order: 0 })
+        setFormData({ title: '', description: '', category: '', clientName: '', date: '', status: 'pending', image: '', link: '', order: 0 })
         setEditingId(null)
         setShowForm(false)
         fetchProjects()
@@ -124,7 +133,7 @@ export default function AdminProjects() {
       const response = await axios.post('/api/admin/projects', formData)
       if (response.data.success) {
         toast.success("Project added successfully")
-        setFormData({ title: '', description: '', category: '', image: '', link: '', order: 0 })
+        setFormData({ title: '', description: '', category: '', clientName: '', date: '', status: 'pending', image: '', link: '', order: 0 })
         setShowForm(false)
         fetchProjects()
       }
@@ -169,7 +178,7 @@ export default function AdminProjects() {
             onClick={() => {
               if (showForm) {
                 setEditingId(null)
-                setFormData({ title: '', description: '', category: '', image: '', link: '', order: 0 })
+                setFormData({ title: '', description: '', category: '', clientName: '', date: '', status: 'pending', image: '', link: '', order: 0 })
               }
               setShowForm(!showForm)
             }}
@@ -276,6 +285,37 @@ export default function AdminProjects() {
                     className="w-full bg-secondary border border-primary border-opacity-10 rounded-xl px-4 py-3 focus:border-primary outline-none transition-all"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-1.5 ml-1">Client Name</label>
+                  <input
+                    type="text"
+                    value={formData.clientName}
+                    onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
+                    className="w-full bg-secondary border border-primary border-opacity-10 rounded-xl px-4 py-3 focus:border-primary outline-none transition-all"
+                    placeholder="Client or company name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-1.5 ml-1">Project Date</label>
+                  <input
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    className="w-full bg-secondary border border-primary border-opacity-10 rounded-xl px-4 py-3 focus:border-primary outline-none transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-1.5 ml-1">Status</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value as 'pending' | 'under process' | 'completed' })}
+                    className="w-full bg-secondary border border-primary border-opacity-10 rounded-xl px-4 py-3 focus:border-primary outline-none transition-all"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="under process">Under Process</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-semibold text-gray-400 mb-1.5 ml-1">Description</label>
                   <textarea
@@ -322,7 +362,10 @@ export default function AdminProjects() {
               <thead>
                 <tr className="bg-secondary bg-opacity-30">
                   <th className="text-left py-4 px-8 text-gray-400 text-xs font-bold uppercase tracking-wider">Project Info</th>
+                  <th className="text-left py-4 px-4 text-gray-400 text-xs font-bold uppercase tracking-wider">Client</th>
+                  <th className="text-left py-4 px-4 text-gray-400 text-xs font-bold uppercase tracking-wider">Date</th>
                   <th className="text-left py-4 px-4 text-gray-400 text-xs font-bold uppercase tracking-wider">Category</th>
+                  <th className="text-left py-4 px-4 text-gray-400 text-xs font-bold uppercase tracking-wider">Status</th>
                   <th className="text-left py-4 px-4 text-gray-400 text-xs font-bold uppercase tracking-wider text-center">Order</th>
                   <th className="text-left py-4 px-8 text-gray-400 text-xs font-bold uppercase tracking-wider text-right">Actions</th>
                 </tr>
@@ -330,7 +373,7 @@ export default function AdminProjects() {
               <tbody className="divide-y divide-primary divide-opacity-10">
                 {projects.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-20 text-center text-gray-500 italic">No projects found. Start by adding one above.</td>
+                    <td colSpan={7} className="py-20 text-center text-gray-500 italic">No projects found. Start by adding one above.</td>
                   </tr>
                 ) : (
                   projects.map((project) => (
@@ -351,9 +394,34 @@ export default function AdminProjects() {
                         </div>
                       </td>
                       <td className="py-5 px-4">
+                        <div className="text-gray-300 text-sm">{project.clientName || 'N/A'}</div>
+                      </td>
+                      <td className="py-5 px-4">
+                        <div className="text-gray-300 text-sm">
+                          {project.date ? new Date(project.date).toLocaleDateString() : 'N/A'}
+                        </div>
+                      </td>
+                      <td className="py-5 px-4">
                         <span className="px-3 py-1 bg-secondary text-gray-300 rounded-full text-[10px] font-bold uppercase tracking-widest border border-primary border-opacity-10">
                           {project.category || 'N/A'}
                         </span>
+                      </td>
+                      <td className="py-5 px-4">
+                        {project.status === 'completed' && (
+                          <span className="px-3 py-1 bg-green-500 bg-opacity-20 text-green-400 rounded-full text-[10px] font-bold uppercase tracking-widest border border-green-500 border-opacity-30">
+                            Completed
+                          </span>
+                        )}
+                        {project.status === 'under process' && (
+                          <span className="px-3 py-1 bg-blue-500 bg-opacity-20 text-blue-400 rounded-full text-[10px] font-bold uppercase tracking-widest border border-blue-500 border-opacity-30">
+                            Under Process
+                          </span>
+                        )}
+                        {(!project.status || project.status === 'pending') && (
+                          <span className="px-3 py-1 bg-yellow-500 bg-opacity-20 text-yellow-400 rounded-full text-[10px] font-bold uppercase tracking-widest border border-yellow-500 border-opacity-30">
+                            Pending
+                          </span>
+                        )}
                       </td>
                       <td className="py-5 px-4 text-center">
                         <span className="text-gray-300 font-mono">{project.order}</span>
