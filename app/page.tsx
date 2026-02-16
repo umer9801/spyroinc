@@ -11,7 +11,7 @@ import { ArrowRight, CheckCircle2, MapPin } from 'lucide-react'
 export default function Home() {
   const features = [
     'Licensed & Insured Professionals',
-    '25+ Years of Experience',
+    'Since 1994',
     'Free Estimates & Consultations',
     'Quality Guaranteed Work',
     'On-Time Project Completion',
@@ -43,8 +43,8 @@ export default function Home() {
                   <span className="text-primary">Excellence</span> in Every
                   Project
                 </h1>
-                <p className="text-xl text-gray-200 mb-2 font-semibold animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  25+ Years of Expert Construction & Renovation
+                <p className="text-xl text-gray-200 mb-2 font-bold animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                  Since 1994
                 </p>
                 <p className="text-gray-300 text-lg mb-8 max-w-lg animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                   Transform your home with professional renovation services. From

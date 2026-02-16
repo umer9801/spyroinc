@@ -7,7 +7,7 @@ export default function About() {
   const achievements = [
     {
       icon: Award,
-      title: '25+ Years',
+      title: 'Since 1994',
       description: 'Of proven excellence in construction',
     },
     {
@@ -58,7 +58,7 @@ export default function About() {
                   About <span className="text-primary">Spyro Inc</span>
                 </h1>
                 <p className="text-xl text-gray-300 mb-6 leading-relaxed">
-                  For over 25 years, Spyro Inc has been the trusted name in construction
+                  Since 1994, Spyro Inc has been the trusted name in construction
                   and renovation across the Greater Toronto Area. We've built our
                   reputation on quality, reliability, and customer satisfaction.
                 </p>
