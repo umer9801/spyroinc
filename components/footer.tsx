@@ -108,8 +108,8 @@ export function Footer() {
               <p className="text-gray-400 text-sm">Projects Completed</p>
             </div>
             <div className="text-center">
-              <p className="text-primary font-bold text-lg">25+</p>
-              <p className="text-gray-400 text-sm">Years Experience</p>
+              <p className="text-primary font-bold text-lg">Serving Customers</p>
+              <p className="text-gray-400 text-sm">Since 1994</p>
             </div>
             <div className="text-center">
               <p className="text-primary font-bold text-lg">98%</p>

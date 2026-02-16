@@ -125,8 +125,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="text-center animate-fade-in-up hover-scale">
-                <h3 className="text-5xl font-bold text-white mb-2 animate-bounce-subtle">25+</h3>
-                <p className="text-red-100 text-lg">Years of Experience</p>
+                <h3 className="text-4xl font-bold text-white mb-2 animate-bounce-subtle">Serving Customers</h3>
+                <p className="text-red-100 text-lg">Since 1994
+
+                  
+                </p>
               </div>
               <div className="text-center animate-fade-in-up hover-scale" style={{ animationDelay: '0.1s' }}>
                 <h3 className="text-5xl font-bold text-white mb-2 animate-bounce-subtle" style={{ animationDelay: '0.2s' }}>500+</h3>

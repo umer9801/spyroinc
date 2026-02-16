@@ -21,7 +21,7 @@ export function PremiumFeatures() {
     },
     {
       icon: Zap,
-      title: '25+ Years Experience',
+      title: 'Serving Customers Since 1994',
       description: 'Proven track record with hundreds of satisfied clients',
     },
   ]
