@@ -30,7 +30,7 @@ export function FAQSection() {
     {
       question: 'Do you require a deposit?',
       answer:
-        'Yes, we require a 30% deposit to secure your project date. The remainder is due upon project completion.',
+        'As Discussed Deposit required. Further Payment As Job Progresses',
     },
     {
       question: 'Can I stay in my home during renovation?',
